@@ -36,10 +36,9 @@ func (psi *Psi) Description() string {
 // SampleConfig returns sample configuration for this plugin
 func (psi *Psi) SampleConfig() string {
 	return `
-    ## Indicate if everything is fine
-    [inputs.psi]
-    ## Psi PATH
-    # PATH=""
+    [[inputs.execd]]
+    command = ["/usr/local/bin/psi"]
+    signal = "none"
     `
 }
 
