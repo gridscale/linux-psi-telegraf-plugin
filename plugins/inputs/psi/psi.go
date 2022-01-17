@@ -46,20 +46,21 @@ func (psi *Psi) SampleConfig() string {
 // Gather Psi metrics
 func (psi *Psi) Gather(acc telegraf.Accumulator) error {
 
-	cpuPressure, memoryPressure, ioPressure, err := psi.GetPressureValues()
+	cpuPressure, memoryPressure, ioPressure, err := psi.getPressureValues()
 	if err == nil {
-		psi.UploadPressure(cpuPressure, memoryPressure, ioPressure, acc)
+		psi.uploadPressure(cpuPressure, memoryPressure, ioPressure, acc)
 	}
 
 	return nil
 }
 
+// run initially when the package is imported
 func init() {
 	inputs.Add("psi", func() telegraf.Input { return &Psi{} })
 }
 
-// GetPressureValue - Get the pressure values from /proc/pressure/*
-func (psi *Psi) GetPressureValues() (cpuPressure procfs.PSIStats, memoryPressure procfs.PSIStats, ioPressure procfs.PSIStats, err error) {
+// getPressureValues - Get the pressure values from /proc/pressure/*
+func (psi *Psi) getPressureValues() (cpuPressure procfs.PSIStats, memoryPressure procfs.PSIStats, ioPressure procfs.PSIStats, err error) {
 	procfs, err := procfs.NewFS("/proc")
 	if err != nil {
 		log.Fatalf("proc not available: %s", err)
@@ -84,8 +85,8 @@ func (psi *Psi) GetPressureValues() (cpuPressure procfs.PSIStats, memoryPressure
 
 }
 
-// UploadPressue Uploads all pressure value to corrosponding fields
-func (psi *Psi) UploadPressure(cpuPressure procfs.PSIStats, memoryPressure procfs.PSIStats, ioPressure procfs.PSIStats, acc telegraf.Accumulator) {
+// uploadPressure Uploads all pressure value to corrosponding fields
+func (psi *Psi) uploadPressure(cpuPressure procfs.PSIStats, memoryPressure procfs.PSIStats, ioPressure procfs.PSIStats, acc telegraf.Accumulator) {
 
 	// pressureTotal some
 
