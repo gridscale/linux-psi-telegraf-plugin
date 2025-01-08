@@ -1,3 +1,6 @@
+> [!NOTE]  
+> As of [Telegraf 1.30](https://github.com/influxdata/telegraf/releases/tag/v1.30.0) PSI (Pressure Stall Information) metrics will be collected without needing this plugin.
+
 # linux-psi-telegraf-plugin
 
 This telegraf plugin will push the pressure stall information (PSI) from the Linux Kernel to influx.
